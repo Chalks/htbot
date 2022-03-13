@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "lint": "eslint --ext .js,.vue .",
+    "test": "jest --verbose",
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "start": "nuxt start",
+    "deploy": "rm -rf dist; npm run generate; npm run deploy:2",
+    "deploy:2": "cd dist; git init; git remote add origin git@github.com:Chalks/htbot.git; npm run deploy:3",
+    "deploy:3": "cd dist; git add .; git commit -m 'Initial commit'; npm run deploy:4",
+    "deploy:4": "cd dist; git push --force origin master:netlify"
+  },
+  "dependencies": {
+    "nuxt": "^2.15.8"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "@nuxtjs/tailwindcss": "^4.2.1",
+    "babel-jest": "^27.4.6",
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-jest": "^26.0.0",
+    "eslint-plugin-vue": "^8.4.0",
+    "jest": "^27.4.7"
+  }
+}
