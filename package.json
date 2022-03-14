@@ -13,10 +13,7 @@
     "deploy:5": "cd dist; git add .; git commit -m 'Initial commit'; npm run deploy:6",
     "deploy:6": "cd dist; git push --force origin master:main",
 
-    "deploy:bot": "cd dist; rm -rf functions; mkdir functions; cp -r ../bot/* functions/; npm run deploy:bot:2",
-    "deploy:bot:2": "cp netlify-package.json dist/package.json; npm run deploy:bot:3",
-    "deploy:bot:3": "cd dist; git add .; git commit -m 'bot deploy'; npm run deploy:bot:4",
-    "deploy:bot:4": "cd dist; git push --force origin master:main"
+    "deploybot": "cd dist; rm -rf functions; mkdir functions; cp -r ../bot/* functions/; cp ../netlify-package.json ./package.json; git add .; git commit -m 'bot deploy'; git push --force origin master:main"
   },
   "dependencies": {
     "nuxt": "^2.15.8",

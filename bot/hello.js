@@ -1,11 +1,11 @@
 const nacl = require('tweetnacl');
 
-const {BOT_TOKEN, PUBLIC_KEY} = require('./config.json');
+const {PUBLIC_KEY} = require('./config.json');
 
 const verify = async ({signature, timestamp, body}) => {
     try {
         const isVerified = nacl.sign.detached.verify(
-            Buffer.from(timestamp + JSON.stringify(body)),
+            Buffer.from(`${timestamp}${body}`),
             Buffer.from(signature, 'hex'),
             Buffer.from(PUBLIC_KEY, 'hex'),
         );
@@ -16,20 +16,41 @@ const verify = async ({signature, timestamp, body}) => {
     }
 };
 
-exports.handler = async (event) => {
-    const {
-        path,
-        httpMethod,
-        headers,
-        queryStringParameters,
-        body,
-    } = event;
+const pong = () => ({
+    statusCode: 200,
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({type: 1}),
+});
 
-    const h = JSON.stringify(headers);
-    const qsp = JSON.stringify(queryStringParameters);
+exports.handler = async ({headers, body}) => {
+    const {'x-signature-ed25519': signature, 'x-signature-timestamp': timestamp} = headers;
+    const verified = await verify({signature, timestamp, body});
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify({message: `Hello: ${path} ${h} ${httpMethod}, ${qsp}, ${body}`}),
-    };
+    if (!verified) {
+        return {
+            statusCode: 401,
+            body: 'invalid request signature',
+        };
+    }
+
+    const {type} = JSON.parse(body);
+
+    switch (type) {
+        case 1:
+            return pong();
+        default:
+            return {
+                statusCode: 200,
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    type: 4,
+                    data: {
+                        tts: false,
+                        content: 'Congrats on sending your command.',
+                        embeds: [],
+                        allowed_mentions: {parse: []},
+                    },
+                }),
+            };
+    }
 };
