@@ -1,0 +1,34 @@
+{
+    "versions": ["v0.4.10"],
+    "latestVersion": "v0.4.10",
+    "v0.4.10": [
+        {
+            "name": "Blood Card",
+            "value": "blood_card"
+        }, {
+            "name": "Dark Sacrifice",
+            "value": "dark_sacrifice"
+        }, {
+            "name": "Discipline",
+            "value": "discipline"
+        }, {
+            "name": "Echo Shot",
+            "value": "echo_shot"
+        }, {
+            "name": "Flay",
+            "value": "flay"
+        }, {
+            "name": "Karma",
+            "value": "karma"
+        }, {
+            "name": "Life Drain",
+            "value": "life_drain"
+        }, {
+            "name": "Multi Stab",
+            "value": "multi_stab"
+        }, {
+            "name": "Poison Dart",
+            "value": "poison_dart"
+        }
+    ]
+}
