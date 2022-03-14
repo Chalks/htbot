@@ -7,12 +7,20 @@
     "generate": "nuxt generate",
     "start": "nuxt start",
     "deploy": "rm -rf dist; npm run generate; npm run deploy:2",
-    "deploy:2": "cd dist; git init; git remote add origin git@github.com:Chalks/htbot.git; npm run deploy:3",
-    "deploy:3": "cd dist; git add .; git commit -m 'Initial commit'; npm run deploy:4",
-    "deploy:4": "cd dist; git push --force origin master:netlify"
+    "deploy:2": "cd dist; git init; git remote add origin git@github.com:Chalks/htbot-deploy.git; npm run deploy:3",
+    "deploy:3": "cd dist; rm -rf functions; mkdir functions; cp -r ../bot/* functions/; npm run deploy:4",
+    "deploy:4": "cp netlify-package.json dist/package.json; npm run deploy:5",
+    "deploy:5": "cd dist; git add .; git commit -m 'Initial commit'; npm run deploy:6",
+    "deploy:6": "cd dist; git push --force origin master:main",
+
+    "deploy:bot": "cd dist; rm -rf functions; mkdir functions; cp -r ../bot/* functions/; npm run deploy:bot:2",
+    "deploy:bot:2": "cp netlify-package.json dist/package.json; npm run deploy:bot:3",
+    "deploy:bot:3": "cd dist; git add .; git commit -m 'bot deploy'; npm run deploy:bot:4",
+    "deploy:bot:4": "cd dist; git push --force origin master:main"
   },
   "dependencies": {
-    "nuxt": "^2.15.8"
+    "nuxt": "^2.15.8",
+    "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",
